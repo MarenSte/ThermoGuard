@@ -109,9 +109,17 @@ public class MainActivity extends AppCompatActivity {
         textWohn=findViewById(R.id.wohn);
         textEss=findViewById(R.id.ess);
         textKueche=findViewById(R.id.kueche);
+        textBad=findViewById(R.id.bad);
+        textArbeit=findViewById(R.id.arbeit);
+        textSchlaf=findViewById(R.id.schlaf);
+        textBalkon=findViewById(R.id.balkon);
         textViews.add(textWohn);
         textViews.add(textEss);
         textViews.add(textKueche);
+        textViews.add(textBad);
+        textViews.add(textArbeit);
+        textViews.add(textSchlaf);
+        textViews.add(textBalkon);
 
         initializeTempSensors();
 
@@ -269,8 +277,14 @@ public class MainActivity extends AppCompatActivity {
         if(string != null && string.length() > 0 && string.charAt(string.length()-1)==';'){
             string = string.substring(0, string.length() - 1);
             String tmp[]=string.split(",");
-            double temp=Double.valueOf(tmp[0]);
-            double hum=Double.valueOf(tmp[1]);
+            double temp=0.0;
+            double hum=0.0;
+            if(tmp[0].charAt(0)!='n'){
+                temp=Double.valueOf(tmp[0]);
+            }
+            if(tmp[1].charAt(0)!='n'){
+                hum=Double.valueOf(tmp[1]);
+            }
             sensor.setTemp(temp);
             sensor.setHum(hum);
         }
@@ -301,19 +315,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeThingSpeakChannels(){
-        ThingSpeak neu=new ThingSpeak(520484,"8FZRH3LVN30XE5XD","W4LCE87JEFM7RCIT","Wohnzimmer");
+        ThingSpeak neu=new ThingSpeak(getResources().getInteger(R.integer.key_wohn),getResources().getString(R.string.key_wohn_write),getResources().getString(R.string.key_wohn_read),"Wohnzimmer");
         thingSpeakList.add(neu);
-        neu= new ThingSpeak(520489,"5O45PVMU95YOKWYA","8YAIVV4TF96VZ6JO","Esszimmer");
+        neu= new ThingSpeak(getResources().getInteger(R.integer.key_ess),getResources().getString(R.string.key_ess_write),getResources().getString(R.string.key_ess_read),"Esszimmer");
         thingSpeakList.add(neu);
-        neu=new ThingSpeak(520490,"DK4G4AOH687GZED7","YXMLA6AKMPJ7Z1M7","Kueche");
+        neu=new ThingSpeak(getResources().getInteger(R.integer.key_kueche),getResources().getString(R.string.key_kueche_write),getResources().getString(R.string.key_kueche_read),"Kueche");
         thingSpeakList.add(neu);
-        neu=new ThingSpeak(520763,"0QH52WF61QBGOJ4G","ROUWP6QHFX98DCXG","Bad");
+        neu=new ThingSpeak(getResources().getInteger(R.integer.key_bad),getResources().getString(R.string.key_bad_write),getResources().getString(R.string.key_bad_read),"Bad");
         thingSpeakList.add(neu);
-        neu=new ThingSpeak(520764,"1SJ3K8JTKKENY66O","3RIZ0JRMHVAISREQ","Arbeitszimmer");
+        neu=new ThingSpeak(getResources().getInteger(R.integer.key_arbeit),getResources().getString(R.string.key_arbeit_write),getResources().getString(R.string.key_arbeit_read),"Arbeitszimmer");
         thingSpeakList.add(neu);
-        neu=new ThingSpeak(520766,"I2MQ9RGIDKHSN7PB","BE8EUHER3O00E7LS","Schlafzimmer");
+        neu=new ThingSpeak(getResources().getInteger(R.integer.key_schlaf),getResources().getString(R.string.key_schlaf_write),getResources().getString(R.string.key_schlaf_read),"Schlafzimmer");
         thingSpeakList.add(neu);
-        neu=new ThingSpeak(520767,"DDLA7HAI6XPQKIHR","SNSYCY2JHF2CMYTH","Balkon");
+        neu=new ThingSpeak(getResources().getInteger(R.integer.key_balkon),getResources().getString(R.string.key_balkon_write),getResources().getString(R.string.key_balkon_read),"Balkon");
         thingSpeakList.add(neu);
     }
 

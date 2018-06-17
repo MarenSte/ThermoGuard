@@ -65,6 +65,7 @@ public class BluetoothService {
      */
     public BluetoothService(Context context, Handler handler) {
         mAdapter = BluetoothAdapter.getDefaultAdapter();
+        System.out.println("Adapter: "+mAdapter);
         mState = STATE_NONE;
         mHandler = handler;
         timer=new Timer();
@@ -134,7 +135,7 @@ public class BluetoothService {
         TimerTask task=new TimerTask() {
             @Override
             public void run() {
-                for(int i=0;i<mConnThreads.size();i++){
+                for(int i=0;i<7;i++){
                     if(mConnThreads.get(i)==null){
                         Message msg = mHandler
                                 .obtainMessage(MainActivity.MESSAGE_DISCONNECTED);
@@ -413,8 +414,10 @@ public class BluetoothService {
             try {
                 // This is a blocking call and will only return on a
                 // successful connection or an exception
+
                 mmSocket.connect();
             } catch (IOException e) {
+                Log.i(TAG, "connection failed");
                 connectionFailed();
                 // Close the socket
                 try {
@@ -423,7 +426,7 @@ public class BluetoothService {
                     Log.e(TAG, "unable to close() socket during connection failure", e2);
                 }
                 // Start the service over to restart listening mode
-                BluetoothService.this.start();
+               // BluetoothService.this.start();
                 return;
             }
 
@@ -431,7 +434,6 @@ public class BluetoothService {
             synchronized (BluetoothService.this) {
                 mConnectThread = null;
             }
-
             // Start the connected thread
             mDeviceAddresses.set(selectedPosition, mmDevice.getAddress());
             mDeviceNames.set(selectedPosition, mmDevice.getName());
